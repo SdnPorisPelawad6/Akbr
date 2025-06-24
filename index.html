@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selamat Ulang Tahun, Akbar!</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      background: linear-gradient(to right, #1e3c72, #2a5298);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      overflow: hidden;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 2.8rem;
+      animation: fadeIn 2s ease-out forwards;
+    }
+    p {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      max-width: 700px;
+      line-height: 1.7;
+      animation: fadeIn 3s ease-out forwards;
+    }
+    .from {
+      margin-top: 30px;
+      font-style: italic;
+      font-size: 1rem;
+      animation: fadeIn 4s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+  <h1>Selamat Ulang Tahun, Akbar Giyansyah!</h1>
+  <p>
+    Selamat Ulang tahun,Wish u all the best. Semoga akan selalu di kelilingi dengan hal hal baik.Aamiin.
+    Semoga setiap langkahmu ke depan dipenuhi keberkahan, kesehatan, dan kebahagiaan yang tak terhingga.  
+    jadi sosok yang kuat, penuh semangat, dan tak pernah menyerah menghadapi setiap masalah.  
+    Terima kasih sudah menjadi pribadi yang tulus dan selalu menginspirasi.  
+    Semoga segala harapan dan impianmu bisa segera terwujud.  
+    Ingat, hidup ini adalah perjalanan yang indah – dan kamu pantas mendapatkan yang terbaik di setiap halamannya.
+    Sekali Lagi selamat Ulang Tahun;)
+  </p>
+  <div class="from">Dari: Anisa Amelia 💫</div>
+
+  <script>
+    // Confetti animation
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiCount = 150;
+    const confettis = [];
+
+    function randomColor() {
+      const colors = ['#fde132', '#009bde', '#ff6b00', '#ffffff'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function Confetti() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height - canvas.height;
+      this.radius = Math.random() * 6 + 4;
+      this.color = randomColor();
+      this.speed = Math.random() * 3 + 2;
+      this.wind = Math.random() * 2 - 1;
+    }
+
+    Confetti.prototype.draw = function () {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    };
+
+    Confetti.prototype.update = function () {
+      this.y += this.speed;
+      this.x += this.wind;
+
+      if (this.y > canvas.height) {
+        this.y = -10;
+        this.x = Math.random() * canvas.width;
+      }
+
+      this.draw();
+    };
+
+    function initConfetti() {
+      for (let i = 0; i < confettiCount; i++) {
+        confettis.push(new Confetti());
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettis.forEach((c) => c.update());
+      requestAnimationFrame(animateConfetti);
+    }
+
+    initConfetti();
+    animateConfetti();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
